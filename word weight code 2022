@@ -1,62 +1,28 @@
-var inputText;
-var state = 1;
-var freetime, favcolor, anynum, disgust, creature, readytime, vegetable, element, superhero;
+Bot.send("Hello, I am a word weight Bot");
+Bot.send("Enter one word at a time!");
 
-Bot.send("Welcome to Mad Libs!. Can you answer these simple questions???(yes/no)");
 async function respond(inputText) {
-	if (state == 1) {
-		if (inputText == "yes") {
-			Bot.send("If you had 3 hours of free time, what would you do? ");
-			state = 2;
+	Bot.send(weightCalculator(inputText.toLowerCase()));
+}
+
+function weightCalculator(word) {
+	var weight = 0;
+	if (word.split(" ").length > 1) {
+	word =word.split(" ").join("");
+	}
+
+	var len = word.length;
+	for (var pos = 0; pos < len; pos++) {
+		var value = word.charCodeAt(pos) - 96;
+		if (value > 0 && value < 27) {
+			weight += value;
 		}
 		else {
-			Bot.send("See you soon!");
-			state = 0;
+			weight = "I can only understand alphabets";
+			break;
 		}
 	}
-	else if (state == 2) {
-		freetime = inputText;
-		Bot.send("What is your favourite color?");
-		state = 3;
-	}
-	else if (state == 3) {
-		favcolor = inputText;
-		Bot.send("Enter any number?");
-		state = 4;
-	}
-	else if (state == 4) {
-		anynum = inputText.match(/\d+/g).map(Number);
-		Bot.send("Describe how you feel when you look at something disgusting");
-		state = 5;
-	}
-	else if (state == 5) {
-		disgust = inputText;
-		Bot.send("Think of a bad creature");
-		state = 6;
-	}
-	else if (state == 6) {
-		creature = inputText;
-		Bot.send("How long you take to get ready?");
-		state = 7;
-	}
-	else if (state == 7) {
-		readytime = inputText;
-		Bot.send("Which vegetable you hate the most!");
-		state = 8;
-	}
-	else if (state == 8) {
-		vegetable = inputText;
-		Bot.send("What would you choose: Water or Fire? ");
-		state = 9;
-	}
-	else if (state == 9) {
-		element = inputText;
-		Bot.send("If you were a super hero, what would you name yourself?");
-		state = 10;
-	}
-	else if (state == 10) {
-		superhero = inputText;
-		Bot.send("One day I was trying to " + freetime + " and I heard a loud BOOM! As soon as I turned around to see what it was, I saw a " + favcolor + "-Fairy,she picked me up and took me to her secret hiding place. She told me she needed a side kick,and so she let me be her side kick! Then we looked out her window and saw " + anynum + " " + disgust + " " + creature + "-monsters coming straight for us! I put on my red suit in " + readytime + " minute(s) and then I started to use my laser beams to keep the " + creature + "-monsters away! They were shooting me with " + vegetable + "-guns. Finally, " + favcolor + "-fairy brought the enemy down with her " + element + "-gun! That was the day I became " + superhero + ".");
 
-	}
+
+	return weight;
 }
