@@ -1,0 +1,46 @@
+import java.util.*;
+class Calculation
+{
+double area;
+void area(int r)
+{ area=3.14*r*r;
+System.out.println("the area of the circle is "+area);
+}
+void area(double s)
+{ area=s*s;
+System.out.println("the area of the square is "+area);
+}
+void area(double l, double b)
+{ area=l*b;
+System.out.println("the area of rectangle is "+area);
+}
+void area(int base, int h)
+{area=0.5*(base*h);
+System.out.println("the area of the triangle is "+area);
+}
+}
+public class exp4
+{
+public static void main (String[] args)
+{
+Scanner sc=new Scanner(System.in);
+System.out.println("enter the length");
+double l=sc.nextDouble();
+System.out.println("enter the breadth");
+double b=sc.nextDouble();
+System.out.println("enter the radius of circle");
+int r= sc.nextInt();
+System.out.println("enter the side of the square");
+double s=sc.nextDouble();
+System.out.println("enter the base of the triangle");
+int base= sc.nextInt();
+System.out.println("enter the height of the triangle");
+
+int h= sc.nextInt();
+Calculation cal=new Calculation();
+cal.area(r);
+cal.area(s);
+cal.area(l,b);
+cal.area(base,h);
+}
+}
