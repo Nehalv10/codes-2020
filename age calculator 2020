@@ -1,0 +1,61 @@
+var state = "Hello";
+var date, year, month;
+var name = " ";
+
+Bot.send("Hello, this is Age Calculator Bot.");
+Bot.send("Please enter your name: ");
+state = "name";
+
+async function respond(inputText) {
+	if (state == "name") {
+		name = inputText;
+		state = "year";
+		Bot.send("In which year you were born?");
+	}
+	else if (state == "year") {
+		year = inputText;
+		var time = new Date();
+		if (year.length == 4 && year > time.getFullYear() - 150 && year < time.getFullYear()) {
+			Bot.send("Now, Please enter the month you were born in?");
+			state = "month";
+			return;
+		}
+
+		Bot.send("Please enter a valid month");
+		return;
+	}
+	else if (state == "month"){
+		month = inputText;
+		if (month > 0 && month < 13) {
+			Bot.send("Ok, So on what date you were born?");
+			state = "date";
+			return;
+
+		}
+		Bot.send("Please enter a valid month");
+		return;
+	}
+	else if (state == "date"){
+	date = inputText;
+	if (date > 0 && date < 32){
+		var time = new Date();
+		var age = time.getFullYear() - year;
+		if(month > time.getMonth() + 1){
+var month_age = month - time.getMonth() + 1;
+		}
+		else{
+			var month_age = time.getMonth() + 1 - month;
+		}
+		if(date > time.getDate()){
+			var date_age = date - time.getDate();
+		}
+		else{
+			var date_age = time.getDate() - date;
+		}
+		Bot.send("Your age is: " + age + " years " + month + " months and " + date + " days.");
+		state = "end";
+		return;
+	}
+	Bot.send("Please enter a valid date of birth");
+}
+}
