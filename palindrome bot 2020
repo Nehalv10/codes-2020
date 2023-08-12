@@ -1,0 +1,18 @@
+Bot.send("Hello, I am a Palindrome Bot");
+Bot.send("Please enter a phrase to check if it is a palindrome or not");
+
+async function respond(inputText){
+	inputText = inputText.toLowerCase();
+	inputText = inputText.split(" ").join("");
+	var reversed = reverse(inputText);
+	if (inputText == reversed) {
+		Bot.send("This is a Palindrome.");
+	}
+	else {
+		Bot.send("This is not a Palindrome.");
+	}
+}
+
+function reverse(phrase) {
+	return phrase.split("").reverse().join("");
+}
