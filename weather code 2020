@@ -1,0 +1,61 @@
+var state = "greetings";
+var cityName = "";
+var choice = -1;
+
+Bot.send("Welcome, I am Advanced Weather Predictor");
+
+async function respond(inputText) {
+	if (state == "greetings") {
+		Bot.send("Hello, I can help you with the weather. Enter the name of the city ");
+		state = "cityName";
+	}
+	else if (state == "cityName") {
+		cityName = inputText;
+		state = "choice";
+		menu();
+	}
+	else if (state == "choice") {
+		choice = inputText;
+		if (choice > 5 && choice < 1) {
+			Bot.send("Please enter a valid choice");
+			return;
+		}
+		if (choice == 5) {
+			state = " cityName";
+			Bot.send("Please enter the name of city:");
+			return;
+		}
+		printWeather(cityName, choice);
+	}
+}
+
+function menu() {
+	Bot.send("Please choose one of the options(1-5):");
+	Bot.send("1. Temperature");
+	Bot.send("2. Pressure");
+	Bot.send("3. Humidity");
+	Bot.send("4. All of Them");
+	Bot.send("5. Re-enter the city name");
+}
+async function printWeather(cityName, choice) {
+	var url = " https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=37d99f4c8bd8fa96d4509c54c8a262d7";
+	try {
+		var result = await CampK12.fetch("GET", url);
+		console.log(result);
+		var temp = (result.main.temp - 273.15).toFixed(2);
+		var pressure = result.main.pressure / 1000;
+		var humid = result.main.humidity;
+		switch (choice) {
+			case "1": Bot.send("Temperature =" + temp + "degree celsius"); break;
+			case "2": Bot.send("Pressure =" + pressure + "Pa"); break;
+			case "3": Bot.send("Humidity =" + humid + "g/kg"); break;
+			case "4": Bot.send("Temperature = " + temp + "degree celsius");
+				Bot.send("Pressure =" + pressure + "Pa");
+				Bot.send("Humidity =" + humid + "g/kg"); break;
+		}
+
+	}
+	catch (e) {
+		Bot.send("The cityName you gave does not exist");
+	}
+}
