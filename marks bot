@@ -1,0 +1,43 @@
+import java.util.*;
+class exp_1 {
+public static void main(String[] args)
+{
+int marks;
+System.out.println("enter your marks");
+Scanner sc = new Scanner(System.in);
+marks=sc.nextInt();
+switch (marks/10)
+{
+case 1:
+System.out.println("Fail");
+break;
+case 2:
+System.out.println("Fail");
+break;
+case 3:
+System.out.println("Fail");
+break;
+case 4:
+System.out.println("Pass");
+break;
+case 5:
+System.out.println("Second Class");
+break;
+case 6:
+System.out.println("First Class");
+break;
+case 7:
+System.out.println("Distinction");
+break;
+case 8:
+System.out.println("Distinction");
+break;
+case 9:
+System.out.println("Distinction");
+break;
+case 10:
+System.out.println("Distinction");
+break;
+}
+}
+}
