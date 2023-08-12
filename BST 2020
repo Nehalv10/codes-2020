@@ -1,0 +1,141 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+ int data;
+ struct node *left;
+ struct node *right;
+};
+struct node *
+create_node (int data)
+{
+ struct node *new_node = (struct node *) malloc (sizeof (struct node));
+ new_node->data = data;
+ new_node->left = NULL;
+ new_node->right = NULL;
+ return new_node;
+}
+struct node *insert_node (struct node *root, int data)
+{
+ if (root == NULL)
+ {
+ root = create_node (data);
+ }
+ else if (data <= root->data)
+ {
+ root->left = insert_node (root->left, data);
+ }
+ else
+ {
+ root->right = insert_node (root->right, data);
+ }
+ return root;
+}
+struct node *find_min (struct node *root)
+{
+ while (root->left != NULL)
+ {
+ root = root->left;
+ }
+ return root;
+}
+struct node *
+delete_node (struct node *root, int data)
+{
+ if (root == NULL)
+ {
+ return root;
+ }
+ else if (data < root->data)
+ {
+ root->left = delete_node (root->left, data);
+ }
+ else if (data > root->data)
+ {
+ root->right = delete_node (root->right, data);
+ }
+ else
+ {
+ // Case 1: No child
+ if (root->left == NULL && root->right == NULL)
+{
+ free (root);
+ root = NULL;
+}
+ // Case 2: One child
+ else if (root->left == NULL)
+{
+ struct node *temp = root;
+ root = root->right;
+ free (temp);
+}
+ else if (root->right == NULL)
+{
+ struct node *temp = root;
+ root = root->left;
+ free (temp);
+}
+ // Case 3: Two children
+ else
+{
+ struct node *temp = find_min (root->right);
+ root->data = temp->data;
+ root->right = delete_node (root->right, temp->data);
+}
+ }
+ return root;
+}
+void
+inorder_traversal (struct node *root)
+{
+ if (root != NULL)
+ {
+ inorder_traversal (root->left);
+ printf ("%d ", root->data);
+ inorder_traversal (root->right);
+ }
+}
+void
+preorder_traversal (struct node *root)
+{
+ if (root != NULL)
+ {
+ printf ("%d ", root->data);
+ preorder_traversal (root->left);
+ preorder_traversal (root->right);
+ }
+}
+void
+postorder_traversal (struct node *root)
+{
+ if (root != NULL)
+ {
+ postorder_traversal (root->left);
+ postorder_traversal (root->right);
+ printf ("%d ", root->data);
+ }
+}
+int main ()
+{
+ int n, i, data, choice;
+ struct node *root = NULL;
+ printf ("Enter the number of nodes to create: ");
+ scanf ("%d", &n);
+ for (i = 0; i < n; i++)
+ {
+ printf ("Enter the data for node %d: ", i + 1);
+ scanf ("%d", &data);
+ root = insert_node (root, data);
+ }
+ while (1)
+ {
+ printf ("\nBinary Search Tree Operations\n");
+ printf ("============================\n");
+ printf ("1. Traverse in Inorder\n");
+ printf ("2. Traverse in Preorder\n");
+ printf ("3. Traverse in Postorder\n");
+ printf ("4. Delete an element\n");
+ printf ("5. Exit\n");
+ printf ("Enter your choice:");
+ }
+}
