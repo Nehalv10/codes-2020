@@ -1,0 +1,7 @@
+Bot.send("Hello,I can suggest you to choose your stream suitable for you");
+Bot.send("Please enter your interests/ skills/ career goals/ anuthing:");
+
+async function respond(inputText){
+var suggestion = await CampK12.classify("Career Stream Bot", inputText);
+Bot.send("I think you should take "+ suggestion + " stream");
+ }
