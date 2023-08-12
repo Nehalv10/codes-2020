@@ -1,0 +1,5 @@
+Bot.send("I am a travel suggester bot");
+Bot.send("please illustrate the kind of place where you want to go");
+async function respond(inputText){
+	Bot.send(await CampK12.classify("Travel suggester", inputText));
+ }
