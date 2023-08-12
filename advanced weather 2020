@@ -1,0 +1,28 @@
+Bot.send("Hello, I am a word weight Bot");
+Bot.send("Enter one word at a time!");
+
+async function respond(inputText) {
+	Bot.send(weightCalculator(inputText.toLowerCase()));
+}
+
+function weightCalculator(word) {
+	var weight = 0;
+	if (word.split(" ").length > 1) {
+	word =word.split(" ").join("");
+	}
+
+	var len = word.length;
+	for (var pos = 0; pos < len; pos++) {
+		var value = word.charCodeAt(pos) - 96;
+		if (value > 0 && value < 27) {
+			weight += value;
+		}
+		else {
+			weight = "I can only understand alphabets";
+			break;
+		}
+	}
+
+
+	return weight;
+}
