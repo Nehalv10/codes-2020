@@ -1,0 +1,25 @@
+Bot.send("Hello,I am VyomMitra,AN ISRO BOT");
+Bot.send("Press 1 to about VyomMitra.");
+Bot.send("Press 2 to know about ISRO");
+Bot.send("Press 3 to know about When was ISRO formed");
+Bot.send("Press 4 to know about How many satellites are launched by ISRO");
+Bot.send("Press 5 to know Which was the first satellite built by India");
+Bot.send("Press 6 to know about launchers");
+Bot.send("Press 7 to know ongoing projects");
+Bot.send("Press 8 to know Who is considered as the 'Founding Father'of Indian Space Programme");
+Bot.send("Press 9 to know What is the main objective of ISRO");
+Bot.send("Press 10 to know about Which is the first operational launch vehicle of india");
+
+var infoList = ["Vyommitra is a female-looking spacefaring humanoid robot being developed by the Indian Space Research Organisation to function on-board the Gaganyaan",
+	"The Indian Space Research Organisation is the space agency of the Government of India and has its headquarters in the city of Bangalore.","ISRO was formed on August 15, 1969.",
+" ARYABHATTA ISRO built India's first satellitewhich was launched by the Soviet Union on 19 April 1975. It was named after the mathematician Aryabhata.",
+"Launchers or Launch Vehicles are used to carry spacecraft to space. India has two operational launchers: Polar Satellite Launch Vehicle (PSLV) and Geosynchronous Satellite Launch Vehicle (GSLV).",
+	"The Indian Space Research Organization (ISRO) and Airports Authority of India (AAI) have implemented the GPS Aided Geo Augmented Navigation-GAGAN project as a Satellite Based Augmentation System (SBAS) for the Indian Airspace.","Vikram Ambalal Sarabhai (1963-1971) Achievements: Dr. Sarabhai was considered as the Father of the Indian space program.He was a great institution builder and established or helped to establish a large number of institutions in diverse fields.","The prime objective of ISRO is to develop space technology and its application to various national needs.","SLV3, India's first experimental launch vehicle, was capable of placing 40 kg class payloads in Low Earth Orbit (LEO). It was an all solid, four stages, 22m tall vehicle, and weighing 17 ton.","ISRO launched 104 satellites of which 3 were Indian satellites. It was the largest number of satellites launched on a single flight by any space agency."];
+async function respond(inputText) {
+	if (inputText <= 10) {
+		Bot.send(infoList[inputText - 1]);
+	}
+	else {
+		Bot.send("invalid input");
+	}
+}
