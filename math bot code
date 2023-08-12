@@ -1,0 +1,58 @@
+Bot.send("Hello , I am a Math Bot");
+Bot.send("please enter an expression to evalute");
+
+async function respond(inputText) {
+	Bot.send(calculate(inputText));
+}
+function calculate(exp) {
+
+	console.log("Before :" + exp);
+	exp = exp.replace(/sin/g, "Math.sin")
+
+		.replace(/cos/g, "Math.cos")
+
+		.replace(/tan/g, "Math.tan")
+
+		.replace(/(\d+)!/g, "factorial($1)")
+
+		.replace(/log/g, "Math.log")
+
+		.replace(/pi/g, "Math.PI")
+
+		.replace(/e/g, "Math.E")
+
+		.replace(/floor/g, "Math.floor")
+
+		.replace(/ceil/g, "Math.ceil")
+
+		.replace(/random/g, "Math.random")
+
+		.replace(/sqrt/g, "Math.sqrt")
+
+		.replace(/\^+/g, "**");
+	console.log("After :" + exp);
+	var answer = eval(exp);
+	
+	console.log (answer);
+	return answer;
+}
+function cot(deg) {
+	return 1 / Math.tan(deg);
+}
+function cosec(deg) {
+	return 1 / Math.sin(deg);
+}
+function sec(deg) {
+	return 1 / Math.cos(deg);
+}
+
+function factorial(number) {
+
+	if (number == 1) {
+		return 1;
+	}
+
+	else {
+		return factorial(number - 1) * number;
+	}
+}
