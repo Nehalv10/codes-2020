@@ -1,0 +1,13 @@
+async function respond(inputText) {
+	Bot.send(factorial(inputText));
+}
+function factorial(number) {
+
+	if (number == 1) {
+		return 1;
+	}
+
+	else {
+		return factorial(number - 1) * number;
+	}
+}
