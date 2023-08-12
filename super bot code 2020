@@ -1,0 +1,225 @@
+var status = "nothing";
+var name;
+var questions = [
+	"The study of ancient societies?",
+	"Which festival is known as the festival of flowers?",
+	" Which is the nearest star to planet earth?",
+	" which is the longest river on the earth?",
+	" which is the most sensitive organ in our body?"
+];
+
+var answers = [
+	"archaeology",
+	"onam",
+	"sun",
+	"nile",
+	"skin"
+];
+
+var score = 0;
+var questionNumber = 0;
+var lastQ = 5;
+var started = false;
+Bot.send("Hi,Please enter your Name");
+
+async function respond(inputText) {
+	if (inputText.toLowerCase() == "exit") {
+		status = "something"
+		Bot.send("Exiting from the previous mode");
+		Bot.send("Please enter your choice from the menu");
+	}
+	else if (inputText.toLowerCase() == "menu") {
+		menu(name);
+	}
+	else if (status == "nothing") {
+		name = inputText;
+		menu(inputText);
+		status = "something";
+	}
+	else if (inputText == 1) {
+		Bot.send("so,How are you today?");
+		status = "sentiment";
+	}
+	else if (inputText == 2) {
+		Bot.send("movie name?");
+		status = "movieBot";
+	}
+	else if (inputText == 3) {
+		Bot.send("enter name of city name?");
+		status = "weatherBot";
+	}
+	else if (inputText == 4) {
+		Bot.send("enter the place where you want to go?");
+		status = "travelBot";
+
+	}
+	else if (inputText == 5) {
+		Bot.send("enter an expression to evalute");
+		status = "calculate";
+	}
+	else if (inputText == 6) {
+		Bot.send("Do you want to play a quiz");
+		status = "quiz";
+	}
+
+	else if (status == "sentiment") {
+		await sentiment(inputText);
+		Bot.send("Enter exit to exit the mode");
+	}
+	else if (status == "movieBot") {
+		await movieBot(inputText);
+		Bot.send("Enter exit to exit the mode");
+	}
+	else if (status == "weatherBot") {
+		await weatherBot(inputText);
+		Bot.send("Enter exit to exit the mode");
+	}
+	else if (status == "travelBot") {
+		await travelBot(inputText);
+		Bot.send("Enter exit to exit the mode ");
+	}
+	else if (status == "calculate") {
+		calculate(inputText);
+		Bot.send("Enter exit to exit the mode ");
+	}
+	else if (status == "quiz") {
+		quiz(inputText);
+	}
+}
+
+function menu(name) {
+	Bot.send("Hello ," + name + "Here is your menu");
+	Bot.send("1. Predict if you're happy or sad");
+	Bot.send("2. Get you a Movie information");
+	Bot.send("3.Fetch some weather details for you");
+	Bot.send("4. Give you some travel suggestions");
+	Bot.send("5. Enter an Mathematical Expression");
+	Bot.send("6. Play a quiz");
+	Bot.send("please enter your choice");
+}
+
+async function sentiment(inputText) {
+	var sentiment = await CampK12.classify("Sentiment Model", inputText);
+	Bot.send("you are " + sentiment + " right now");
+}
+async function movieBot(movieName) {
+	var response;
+	var url = " https://www.omdbapi.com/?apikey=51b33037&t=" + movieName;
+	var result = await CampK12.fetch("GET", url);
+	if (result.Response == "True") {
+
+		response = "Movie " + result.Title + " released on " + result.Released +
+			" directed by " + result.Director + " acted by " + result.Actors +
+			" with an imdb Rating of " + result.imdbRating;
+	}
+
+	else {
+		response = "the movie does not exists";
+	}
+	Bot.send(response);
+}
+
+async function weatherBot(cityName) {
+	var response;
+	var url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=37d99f4c8bd8fa96d4509c54c8a262d7";
+	try {
+		var result = await CampK12.fetch("GET", url);
+		Bot.send("The temperature is :" + (result.main.temp - 273.15) + " degree celsius");
+	}
+	catch (e) {
+		Bot.send("city name is not found");
+	}
+}
+async function travelBot(inputText) {
+	var travel = await CampK12.classify("Travel suggester", inputText);
+	Bot.send("you want to travel to " + travel + " right now");
+}
+function calculate(exp) {
+
+	console.log("Before :" + exp);
+	exp = exp.replace(/sin/g, "Math.sin")
+
+		.replace(/cos/g, "Math.cos")
+
+		.replace(/tan/g, "Math.tan")
+
+		.replace(/(\d+)!/g, "factorial($1)")
+
+		.replace(/log/g, "Math.log")
+
+		.replace(/pi/g, "Math.PI")
+
+		.replace(/e/g, "Math.E")
+
+		.replace(/floor/g, "Math.floor")
+
+		.replace(/ceil/g, "Math.ceil")
+
+		.replace(/random/g, "Math.random")
+
+		.replace(/sqrt/g, "Math.sqrt")
+
+		.replace(/\^+/g, "**");
+	console.log("After :" + exp);
+	var answer = eval(exp);
+
+	console.log(answer);
+	Bot.send("This is your answer " + answer);
+	return answer;
+}
+function cot(deg) {
+	return 1 / Math.tan(deg);
+}
+function cosec(deg) {
+	return 1 / Math.sin(deg);
+}
+function sec(deg) {
+	return 1 / Math.cos(deg);
+}
+
+function factorial(number) {
+
+	if (number == 1) {
+		return 1;
+	}
+
+	else {
+		return factorial(number - 1) * number;
+	}
+}
+function quiz(inputText){
+	if (started == false){
+		if (inputText == 'yes') {
+			started = true;
+			Bot.send("Here comes your first question");
+			Bot.send(questions[questionNumber]);
+		}
+	}
+	else {
+		if (inputText == answers[questionNumber]) {
+			score++;
+			questionNumber++
+			Bot.send("Correct answer!");
+
+		}
+		else {
+			Bot.send("Wrong answer!");
+            questionNumber++
+		}
+		if (questionNumber == lastQ) {
+
+
+			Bot.send("this was your last question");
+			Bot.send("Thanks for playing. Your score is :" + score + "/" + lastQ);
+			Bot.send("Exiting the mode");
+			started == false;
+			questionNumber = 0;
+			score = 0;
+		}
+
+		else {
+			Bot.send("your next question is : ");
+			Bot.send(questions[questionNumber]);
+		}
+	}
+}
