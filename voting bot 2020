@@ -1,0 +1,11 @@
+Bot.send("Hello I am Voting Bot");
+Bot.send("What is your age?");
+
+async function respond(inputText){
+	if (inputText >= 18){
+Bot.send("you are  eligible to vote");
+	}
+	else{
+		Bot.send("you are not eligible to vote")
+	}
+ }
