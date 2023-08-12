@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 10
+struct node
+{
+ int data;
+ struct node *next;
+};
+void
+insert (struct node *hashTable[], int value)
+{
+ int index = abs (value) % SIZE;
+ struct node *newNode = malloc (sizeof (struct node));
+ newNode->data = value;
+ newNode->next = hashTable[index];
+ hashTable[index] = newNode;
+}
+int
+search (struct node *hashTable[], int value)
+{
+ int index = abs (value) % SIZE;
+ struct node *temp = hashTable[index];
+ while (temp != NULL)
+ {
+ if (temp->data == value)
+{
+ return 1;
+}
+ temp = temp->next;
+ }
+ return 0;
+}
+int
+main ()
+{
+ struct node *hashTable[SIZE] = { NULL };
+ insert (hashTable, 5);
+ insert (hashTable, -3);
+ insert (hashTable, 7);
+ insert (hashTable, 2);
+ int value = 7;
+ if (search (hashTable, value))
+ {
+ printf ("%d is found in the hash table.\n", value);
+ }
+ else
+ {
+ printf ("%d is not found in the hash table.\n", value);
+ }
+ value = 6;
+ if (search (hashTable, value))
+ {
+ printf ("%d is found in the hash table.\n", value);
+ }
+ else
+ {
+ printf ("%d is not found in the hash table.\n", value);
+ }
+ return 0;
+}
