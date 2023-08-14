@@ -1,0 +1,6 @@
+Write a code to loop through a list of numbers and print it
+num=[1,2,3,4,5]
+
+for i in num:
+
+print(i)
