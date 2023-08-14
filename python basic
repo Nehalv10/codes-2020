@@ -1,0 +1,11 @@
+Addition = a+b+c
+
+Multiplication = def*g
+
+Division = h/i
+
+print("ADDITION: ",Addition)
+
+print("MULTIPLICATION: ",Multiplication)
+
+print("DIVISION: ",Division) 
